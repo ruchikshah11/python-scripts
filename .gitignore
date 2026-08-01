@@ -1,0 +1,43 @@
+# Python bytecode cache - regenerated automatically, differs per machine/Python version
+__pycache__/
+*.pyc
+
+# Virtual environments - hardcoded absolute paths + OS-specific binaries, breaks if committed
+.venv/
+venv/
+env/
+
+# Secrets - not used yet, but keep out if cert/secret auth is added later
+*.pfx
+*.key
+.env
+
+# Log directories/files created when scripts run
+**/Logs/
+*.log
+
+# Personal data - these SQLite databases hold real tasks/expenses, not source code.
+# Committing them would leak personal data and create noisy diffs on every use.
+Projects/TodoManager/todo.db
+Projects/ExpenseTracker/expenses.db
+
+# Last-used weather_app.py location/country/units - per-machine state, not source
+Projects/Weather/weather_settings.json
+
+# Generated demo/sample output (regenerated each run, not source)
+Learning/Lesson06_FilesAndModules/sample.txt
+Learning/Lesson06_FilesAndModules/sample.json
+Learning/Lesson06_FilesAndModules/sample.csv
+Learning/Lesson06_FilesAndModules/config.json
+Learning/Lesson06_FilesAndModules/people.csv
+SharePoint/Demo/term_store_export_demo.json
+SharePoint/Demo/term_group_export_demo.json
+SharePoint/Demo/upload_demo.txt
+SharePoint/Demo/download_demo.txt
+
+# Claude Code local settings - machine-specific, not project source
+.claude/
+
+# OS junk
+Thumbs.db
+desktop.ini
