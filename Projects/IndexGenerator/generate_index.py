@@ -24,7 +24,7 @@ DESCRIPTION
 
 EXAMPLE
     python generate_index.py
-    python generate_index.py --root "C:/Users/ruchik.shah/Downloads/Python"
+    python generate_index.py --root "C:/Users/ruchik.shah/Downloads/python-scripts"
 
 NOTES
     Created by  : Ruchik Shah

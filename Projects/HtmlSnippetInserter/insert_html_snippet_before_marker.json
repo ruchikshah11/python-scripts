@@ -1,0 +1,25 @@
+{
+  "dry_run": true,
+  "edits": [
+    {
+      "file_path": "C:\\Ruchik\\BSTFS\\bsone.deployment.qm\\2_Packages\\QM\\ProvisioningTemplates\\EmailTemplates\\Files\\English\\bsoneQMDocumentApprovalNotifyApprovedEN.html",
+      "marker": "<p>Thank You</p>",
+      "snippet": "<p><b>[ApproverComments]</b></p>"
+    },
+    {
+      "file_path": "C:\\Ruchik\\BSTFS\\bsone.deployment.qm\\2_Packages\\QM\\ProvisioningTemplates\\EmailTemplates\\Files\\English\\bsoneQMProcessApprovalNotifyApprovedEN.html",
+      "marker": "<p>Thank You</p>",
+      "snippet": "<p><b>[ApproverComments]</b></p>"
+    },
+    {
+      "file_path": "C:\\Ruchik\\BSTFS\\bsone.deployment.qm\\2_Packages\\QM\\ProvisioningTemplates\\EmailTemplates\\Files\\German\\bsoneQMDocumentApprovalNotifyApprovedDE.html",
+      "marker": "<p>Vielen Dank</p>",
+      "snippet": "<p><b>[ApproverComments]</b></p>"
+    },
+    {
+      "file_path": "C:\\Ruchik\\BSTFS\\bsone.deployment.qm\\2_Packages\\QM\\ProvisioningTemplates\\EmailTemplates\\Files\\German\\bsoneQMProcessApprovalNotifyApprovedDE.html",
+      "marker": "<p>Vielen Dank</p>",
+      "snippet": "<p><b>[ApproverComments]</b></p>"
+    }
+  ]
+}

@@ -11,10 +11,10 @@ None beyond the standard library.
 ## Run it
 ```
 python analyze_logs.py
-python analyze_logs.py --root "C:/Users/ruchik.shah/Downloads/Python"
+python analyze_logs.py --root "C:/Users/ruchik.shah/Downloads/python-scripts"
 python analyze_logs.py --output summary.json
 ```
-`--root` defaults to the parent of this script's folder (i.e. `Downloads/Python`).
+`--root` defaults to the parent of this script's folder (i.e. `Downloads/python-scripts`).
 
 ## Output
 - Overall totals: scripts analyzed, total runs, total failures, total ERROR lines

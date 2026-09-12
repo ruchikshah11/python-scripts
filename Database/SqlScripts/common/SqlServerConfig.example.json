@@ -1,0 +1,6 @@
+{
+  "Server": "your-sql-server-host-or-ip",
+  "UserId": "your-sql-login",
+  "Password": "your-sql-password",
+  "TrustServerCertificate": "True"
+}

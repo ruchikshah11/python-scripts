@@ -15,7 +15,7 @@ DESCRIPTION
 
 EXAMPLE
     python analyze_logs.py
-    python analyze_logs.py --root "C:/Users/ruchik.shah/Downloads/Python"
+    python analyze_logs.py --root "C:/Users/ruchik.shah/Downloads/python-scripts"
     python analyze_logs.py --output summary.json
 
 NOTES

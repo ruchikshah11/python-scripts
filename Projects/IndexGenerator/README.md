@@ -12,7 +12,7 @@ None beyond the standard library.
 ## Run it
 ```
 python generate_index.py
-python generate_index.py --root "C:/Users/ruchik.shah/Downloads/Python"
+python generate_index.py --root "C:/Users/ruchik.shah/Downloads/python-scripts"
 ```
 Re-run any time you add or change scripts — `INDEX.md` is generated output, not meant
 to be hand-edited.

@@ -1,0 +1,5 @@
+{
+  "Database": "bsone_1693759966",
+  "TableName": "dbo.YourTable",
+  "TruncateBeforeImport": false
+}

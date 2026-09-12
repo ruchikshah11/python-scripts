@@ -34,6 +34,8 @@ SharePoint/Demo/term_store_export_demo.json
 SharePoint/Demo/term_group_export_demo.json
 SharePoint/Demo/upload_demo.txt
 SharePoint/Demo/download_demo.txt
+Database/SqlScripts/ExportSqlQueryToCsv/EffortExport.csv
+Database/SqlScripts/ExportTenantSubscriptionsToCsv/TenantSubscriptions.csv
 
 # Claude Code local settings - machine-specific, not project source
 .claude/
