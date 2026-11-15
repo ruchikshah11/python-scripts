@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: bold; font-size: 20px; fill: #0f172a; }
+      .sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: bold; font-size: 14px; fill: #1e293b; }
+      .subtext { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #475569; }
+      .code { font-family: monospace; font-size: 12px; }
+    </style>
+    <marker id="cycle-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="gc-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <rect width="850" height="480" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="35" y="40" class="title">Circular References and the Cyclic Garbage Collector</text>
+  <text x="35" y="62" class="sub">Why reference counting fails on circular islands and how the Generational GC detects unreachability</text>
+
+  <!-- Left: The Problem -->
+  <g transform="translate(40, 95)">
+    <rect width="360" height="340" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="20" y="30" class="label" fill="#991b1b">The Reference Island (Memory Leak)</text>
+    <text x="20" y="52" class="subtext">External variables 'a' and 'b' were deleted with `del`</text>
+
+    <!-- Node A -->
+    <rect x="30" y="80" width="130" height="90" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+    <text x="45" y="105" class="label">Node A</text>
+    <text x="45" y="125" class="code" fill="#b91c1c">refcnt = 1</text>
+    <text x="45" y="145" class="subtext">partner: Node B</text>
+
+    <!-- Node B -->
+    <rect x="200" y="80" width="130" height="90" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="105" class="label">Node B</text>
+    <text x="215" y="125" class="code" fill="#b91c1c">refcnt = 1</text>
+    <text x="215" y="145" class="subtext">partner: Node A</text>
+
+    <!-- Circular Arrows -->
+    <path d="M 160 110 L 195 110" stroke="#dc2626" stroke-width="2" marker-end="url(#cycle-arrow)"/>
+    <path d="M 200 140 L 165 140" stroke="#dc2626" stroke-width="2" marker-end="url(#cycle-arrow)"/>
+
+    <!-- Problem Explanation -->
+    <rect x="20" y="200" width="320" height="115" rx="6" fill="#ffffff" stroke="#fecaca"/>
+    <text x="30" y="222" class="subtext" font-weight="bold" fill="#991b1b">Why Reference Counting Fails:</text>
+    <text x="30" y="242" class="subtext">1. Both objects hold a reference to each other.</text>
+    <text x="30" y="260" class="subtext">2. Even though NO active variable points to them,</text>
+    <text x="30" y="278" class="subtext">   neither ob_refcnt ever reaches 0.</text>
+    <text x="30" y="296" class="subtext">3. Reference counting alone leaks this memory!</text>
+  </g>
+
+  <!-- Right: The Solution -->
+  <g transform="translate(440, 95)">
+    <rect width="370" height="340" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+    <text x="20" y="30" class="label" fill="#166534">Cyclic GC Solution (Trial Decrement)</text>
+    <text x="20" y="52" class="subtext">Generational GC detects unreachable reference clusters</text>
+
+    <!-- Algorithm Steps -->
+    <g transform="translate(20, 80)">
+      <rect width="330" height="48" rx="6" fill="#ffffff" stroke="#bbf7d0"/>
+      <text x="15" y="20" class="subtext" font-weight="bold" fill="#15803d">Step 1: Copy Reference Counts</text>
+      <text x="15" y="38" class="subtext">Creates trial count field (gc_refs = ob_refcnt).</text>
+    </g>
+
+    <g transform="translate(20, 140)">
+      <rect width="330" height="58" rx="6" fill="#ffffff" stroke="#bbf7d0"/>
+      <text x="15" y="20" class="subtext" font-weight="bold" fill="#15803d">Step 2: Trial Decrement Across Graph</text>
+      <text x="15" y="38" class="subtext">Traverses container pointers. For each internal</text>
+      <text x="15" y="52" class="subtext">reference, decrements target's gc_refs by 1.</text>
+    </g>
+
+    <g transform="translate(20, 210)">
+      <rect width="330" height="60" rx="6" fill="#ffffff" stroke="#bbf7d0"/>
+      <text x="15" y="20" class="subtext" font-weight="bold" fill="#15803d">Step 3: Reachability Partitioning</text>
+      <text x="15" y="38" class="subtext">• gc_refs == 0 : UNREACHABLE (Isolate &amp; collect)</text>
+      <text x="15" y="52" class="subtext">• gc_refs &gt; 0  : REACHABLE (Preserve &amp; promote)</text>
+    </g>
+
+    <g transform="translate(20, 280)">
+      <rect width="330" height="35" rx="6" fill="#22c55e"/>
+      <text x="20" y="23" font-family="sans-serif" font-size="12" font-weight="bold" fill="#ffffff">Result: Isolated cycle successfully destroyed!</text>
+    </g>
+  </g>
+</svg>

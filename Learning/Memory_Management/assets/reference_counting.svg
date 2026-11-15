@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: bold; font-size: 20px; fill: #0f172a; }
+      .sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 600; font-size: 13px; fill: #1e293b; }
+      .code { font-family: "Courier New", Courier, monospace; font-size: 12px; fill: #0f172a; }
+      .ref-badge { font-family: monospace; font-size: 12px; font-weight: bold; fill: #ffffff; }
+      .action-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 500; fill: #475569; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-del" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="850" height="480" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="35" y="40" class="title">Reference Counting Mechanics in CPython</text>
+  <text x="35" y="62" class="sub">How variable references, container insertions, and 'del' manipulate the PyObject ob_refcnt</text>
+
+  <!-- Central PyObject Representation -->
+  <g transform="translate(320, 110)">
+    <rect width="220" height="250" rx="10" fill="#f8fafc" stroke="#3b82f6" stroke-width="2"/>
+    <rect width="220" height="40" rx="10" fill="#2563eb"/>
+    <text x="25" y="26" font-family="monospace" font-weight="bold" font-size="14" fill="#ffffff">PyObject on Heap</text>
+
+    <!-- Header Fields -->
+    <rect x="15" y="55" width="190" height="40" rx="6" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="25" y="72" class="code" font-weight="bold">ob_refcnt: <tspan fill="#2563eb" font-size="14">COUNT</tspan></text>
+    <text x="25" y="88" font-size="10" fill="#64748b">64-bit integer (8 bytes)</text>
+
+    <rect x="15" y="105" width="190" height="40" rx="6" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="25" y="122" class="code" font-weight="bold">ob_type: &amp;PyList_Type</text>
+    <text x="25" y="138" font-size="10" fill="#64748b">Pointer to type struct (8 bytes)</text>
+
+    <!-- Payload -->
+    <rect x="15" y="155" width="190" height="75" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="25" y="175" class="code" font-weight="bold">Data Payload:</text>
+    <text x="25" y="195" class="code">['apple', 'banana']</text>
+    <text x="25" y="215" font-size="10" fill="#64748b">Items array + capacity slots</text>
+  </g>
+
+  <!-- Reference 1: Variable 'a' -->
+  <g transform="translate(60, 120)">
+    <rect width="160" height="55" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="15" y="26" class="label">Variable 'a'</text>
+    <text x="15" y="44" class="code">a = ['apple', 'banana']</text>
+    <path d="M 160 27 L 255 27" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="175" y="20" class="action-text">+1 Ref</text>
+  </g>
+
+  <!-- Reference 2: Variable 'b' (Alias) -->
+  <g transform="translate(60, 200)">
+    <rect width="160" height="55" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="15" y="26" class="label">Variable 'b'</text>
+    <text x="15" y="44" class="code">b = a (Alias)</text>
+    <path d="M 160 27 L 255 27" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="175" y="20" class="action-text">+1 Ref</text>
+  </g>
+
+  <!-- Reference 3: Container Slot -->
+  <g transform="translate(60, 280)">
+    <rect width="160" height="55" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="15" y="26" class="label">Container slot</text>
+    <text x="15" y="44" class="code">data_dict['key'] = a</text>
+    <path d="M 160 27 L 255 27" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="175" y="20" class="action-text">+1 Ref</text>
+  </g>
+
+  <!-- Decrement / Del Flow -->
+  <g transform="translate(610, 180)">
+    <rect width="190" height="110" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="15" y="25" class="label" fill="#991b1b">Reference Dropped</text>
+    <text x="15" y="45" class="code">• del a</text>
+    <text x="15" y="63" class="code">• b = None</text>
+    <text x="15" y="81" class="code">• Function frame exits</text>
+    <text x="15" y="98" font-size="11" fill="#b91c1c" font-weight="bold">ob_refcnt decremented by 1</text>
+  </g>
+
+  <!-- Lifecycle condition bottom banner -->
+  <rect x="40" y="400" width="770" height="50" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <circle cx="65" cy="425" r="10" fill="#16a34a"/>
+  <text x="61" y="429" font-size="12" fill="#ffffff" font-weight="bold">✓</text>
+  <text x="90" y="429" class="label">Rule: When ob_refcnt == 0, CPython calls tp_dealloc() and frees memory immediately.</text>
+</svg>
