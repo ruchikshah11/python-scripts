@@ -1,5 +1,8 @@
 # Lesson 10: Iterators and Generators
 
+**Author**: Navneet Saunee  
+**Date**: November 2026  
+
 Reference and interactive demo script covering Python iterators, the iterator protocol, custom iterators, generators, `yield`, generator expressions, `yield from`, advanced generator methods (`send()`, `close()`), lazy evaluation, memory efficiency, practical streaming patterns, and essential interview questions.
 
 ---

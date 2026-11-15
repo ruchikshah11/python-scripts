@@ -13,9 +13,9 @@ EXAMPLE
     python iterators_and_generators.py
 
 NOTES
-    Created by  : Ruchik Shah
+    Created by  : Navneet Saunee
     Created on  : 2026-11-15
-    Modified by : Ruchik Shah
+    Modified by : Navneet Saunee
     Modified on : 2026-11-15
     Version     : 1.0.0
 """
